@@ -6,6 +6,10 @@
   max-width: 49%;
 }
 
+.banner_image {
+  width: 100%
+}
+
 @media screen and (max-width:767px) {
   .products-list.row.no-gutters .card { 
     max-width: 100%;

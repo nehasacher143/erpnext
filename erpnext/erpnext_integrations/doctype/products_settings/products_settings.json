@@ -9,7 +9,9 @@
   "show_availability_status",
   "section_break_5",
   "products_per_page",
+  "column_break_6",
   "banner_image",
+  "filters_section",
   "enable_field_filters",
   "filter_fields",
   "enable_attribute_filters",
@@ -46,6 +48,11 @@
    "label": "Products per Page"
   },
   {
+   "fieldname": "banner_image",
+   "fieldtype": "Attach Image",
+   "label": "Banner Image"
+  },
+  {
    "default": "0",
    "fieldname": "enable_field_filters",
    "fieldtype": "Check",
@@ -78,16 +85,20 @@
    "label": "Hide Variants"
   },
   {
-   "fieldname": "banner_image",
-   "fieldtype": "Attach Image",
-   "label": "Banner Image"
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "filters_section",
+   "fieldtype": "Section Break",
+   "label": "Filters"
   }
  ],
  "issingle": 1,
  "links": [],
- "modified": "2020-07-29 03:16:40.617716",
+ "modified": "2020-07-29 03:18:16.331697",
  "modified_by": "Administrator",
- "module": "Portal",
+ "module": "ERPNext Integrations",
  "name": "Products Settings",
  "owner": "Administrator",
  "permissions": [
