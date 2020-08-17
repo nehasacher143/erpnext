@@ -1,6 +1,7 @@
 import frappe
 from erpnext.portal.product_configurator.utils import (get_products_for_website, get_product_settings,
 	get_field_filter_data, get_attribute_filter_data)
+from erpnext.stock.doctype.batch.batch import (get_active_batch)
 
 sitemap = 1
 
@@ -13,7 +14,9 @@ def get_context(context):
 	else:
 		search = field_filters = attribute_filters = None
 
-	context.items = get_products_for_website(field_filters, attribute_filters, search)
+	context.products = get_products_for_website(field_filters, attribute_filters, search)
+	for product in context.products:
+			product["active_batch"] = get_active_batch(product.name)
 
 	product_settings = get_product_settings()
 	context.field_filters = get_field_filter_data() \
