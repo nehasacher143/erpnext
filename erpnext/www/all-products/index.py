@@ -20,7 +20,7 @@ def get_context(context):
 		item["active_batch"] = get_active_batch(item.name)
 		item["info"] = get_product_info_for_website(item.name)
 		itemgroup = frappe.db.get_value('Item', item.name, 'item_group')
-		item["group"] = ''.join(itemgroup.split()).lower()
+		item["group"] = frappe.scrub(itemgroup).replace("_", "")
 
 	product_settings = get_product_settings()
 	context.field_filters = get_field_filter_data() \
