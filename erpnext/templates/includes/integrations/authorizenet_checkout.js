@@ -2,7 +2,8 @@ $('#submit').on("click", function(e) {
 	let data = context.replace(/'/g, '"');
 	e.preventDefault();
 
-	let cardNumber = document.getElementById('card-number').value;
+	let cardNumberWithSpaces = document.getElementById('card-number').value;
+	let cardNumber = cardNumberWithSpaces.split(" ").join("");
 	let expirationMonth = document.getElementById('card-expiry-month').value;
 	let expirationYear = document.getElementById('card-expiry-year').value;
 	let expirationDate = expirationYear.concat("-").concat(expirationMonth);
