@@ -3,7 +3,7 @@ $('#submit').on("click", function(e) {
 	e.preventDefault();
 
 	let cardNumberWithSpaces = document.getElementById('card-number').value;
-	let cardNumber = cardNumberWithSpaces.split(" ").join("");
+	let cardNumber = cardNumberWithSpaces.replace(/ /g,"");
 	let expirationMonth = document.getElementById('card-expiry-month').value;
 	let expirationYear = document.getElementById('card-expiry-year').value;
 	let expirationDate = expirationYear.concat("-").concat(expirationMonth);
