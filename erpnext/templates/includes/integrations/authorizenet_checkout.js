@@ -56,8 +56,7 @@ $('input[data-validation="digit"]')
 
 $('#card-number').on('keyup', function () {
 	var val = $(this).val();
-	var newval = '';
 	val = val.replace(/\s/g, '');
-	newval = val.match(/.{1,4}/g).join(" ")
+	var newval = val.match(/.{1,4}/g).join(" ");
 	$(this).val(newval);
 });
