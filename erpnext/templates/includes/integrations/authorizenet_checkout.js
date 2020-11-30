@@ -54,14 +54,10 @@ $('input[data-validation="digit"]')
 		return (event.charCode !== 8 && event.charCode === 0 || (event.charCode >= 48 && event.charCode <= 57));
 	});
 
-$('#card-number').on('keyup', function (e) {
+$('#card-number').on('keyup', function () {
 	var val = $(this).val();
 	var newval = '';
 	val = val.replace(/\s/g, '');
-	for (var i = 0; i < val.length; i++) {
-		if (i % 4 == 0 && i > 0)
-			newval = newval.concat(' ');
-		newval = newval.concat(val[i]);
-	}
+	newval = val.match(/.{1,4}/g).join(" ")
 	$(this).val(newval);
 });
