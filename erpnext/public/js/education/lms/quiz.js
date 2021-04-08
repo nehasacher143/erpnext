@@ -22,7 +22,7 @@ class Quiz {
 				this.timer(quiz_time);
 			}
 			else {
-				$('#timer').html(" ")
+				$('#timer').html("")
 			}
 		});
 	}
@@ -37,7 +37,7 @@ class Quiz {
 		}
 
 		if (quiz_time == 0 || quiz_time < 0) {
-			$('#timer').html("Time's up");
+			$('#timer').html("Time's Up");
 			this.submit();
 		}
 		else {
