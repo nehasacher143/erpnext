@@ -29,15 +29,15 @@ class Quiz {
 
 	timer(quiz_time) {
 		let me = this;
-		var minutes = parseInt(quiz_time / 60) % 60;
-		var seconds = quiz_time % 60;
-		var result = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+		let minutes = parseInt(quiz_time / 60) % 60;
+		let seconds = quiz_time % 60;
+		let result = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
 		if (quiz_time > 0) {
 			$('#timer').html(result + '<span class="timer_text">Time Remaining</span>');
 		}
 
 		if (quiz_time == 0 || quiz_time < 0) {
-			$('#timer').html("Time up");
+			$('#timer').html("Time's up");
 			this.submit();
 		}
 		else {
