@@ -4,7 +4,7 @@ class Quiz {
 		Object.assign(this, options);
 		this.questions = []
 		this.refresh();
-		var timer;
+		let timer;
 	}
 
 
@@ -51,7 +51,6 @@ class Quiz {
 	}
 
 	stopTimer() {
-		console.log(Quiz.timer)
 		clearTimeout(Quiz.timer);
 	}
 
