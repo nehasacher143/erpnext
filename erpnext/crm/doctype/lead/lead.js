@@ -49,6 +49,17 @@ erpnext.LeadController = frappe.ui.form.Controller.extend({
 		}
 	},
 
+	validate: function() {
+			console.log(this.frm.doc.website);
+			if(this.frm.doc.website) {
+				var website_url = this.frm.doc.website;
+				var regex = new RegExp('^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$');
+				if (!regex.test(website_url)) {
+						frappe.throw(__('Please enter a valid Website URL'))
+				}
+			}
+	},
+
 	make_investor: function(){
 		frappe.model.open_mapped_doc({
 			method: "erpnext.crm.doctype.lead.lead.make_investor",
