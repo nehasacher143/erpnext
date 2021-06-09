@@ -4,7 +4,7 @@
 from __future__ import unicode_literals
 import frappe
 import json
-from frappe.utils import cint, getdate, formatdate, today
+from frappe.utils import cint, getdate, formatdate, today, add_days, get_date_str
 from frappe import throw, _
 from frappe.model.document import Document
 
@@ -90,7 +90,38 @@ def is_holiday(holiday_list, date=today()):
 	"""Returns true if the given date is a holiday in the given holiday list
 	"""
 	if holiday_list:
-		return bool(frappe.get_all('Holiday List',
-			dict(name=holiday_list, holiday_date=date)))
+		return bool(frappe.get_all('Holiday List',dict(name=holiday_list, holiday_date=date)))
 	else:
 		return False
+
+def send_holiday_notification():
+	# holidays is a list of holidays which fall in 7 days from today
+	# new_holidays is a list of holidays which fall in 7 days from today and are not on a Saturday or Sunday
+	holiday_lists = frappe.get_all('Holiday List', ["name", "send_reminders_to"])
+	new_holidays = []
+
+	for holiday_list in holiday_lists:
+		today_date = today()
+		end_date = get_date_str(add_days(today(), 7))
+		holidays = frappe.get_all('Holiday',{"parent" : holiday_list.name, "holiday_date": ["BETWEEN", [today_date, end_date]]}, ["holiday_date","description"])
+
+		# Checking if a holiday falls on Saturday or Sunday
+		for holiday in holidays:
+			data = frappe.utils.get_weekday(holiday.holiday_date)
+			if data != 'Saturday' and data != 'Sunday':
+				new_holidays.append(holiday)
+		new_holidays = [(formatdate(d.holiday_date),"for ",d.description) for d in new_holidays]
+		if new_holidays:
+			# new_holiday_list is a array after joining the tuples got in new_holidays
+			new_holiday_list = [' '.join(tups) for tups in new_holidays]
+
+			recipients = [d.email for d in frappe.get_list("Email Group Member",{"email_group": holiday_list.send_reminders_to}, ["email"])]
+
+			message = _("""Hi Team <br>
+			This is to inform that there is a holiday on <br>
+			{0}""".format('<br>'.join(new_holiday_list)))
+
+			frappe.sendmail(recipients=recipients,
+					subject="Holiday Notification",
+					message=message)
+			new_holidays = []
