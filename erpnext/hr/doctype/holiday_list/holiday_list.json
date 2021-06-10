@@ -13,6 +13,8 @@
   "column_break_4",
   "total_holidays",
   "send_reminders_to",
+  "section_break_7",
+  "notification_message",
   "add_weekly_holidays",
   "weekly_off",
   "get_weekly_off_dates",
@@ -113,11 +115,20 @@
    "fieldtype": "Link",
    "label": "Send Reminders to",
    "options": "Email Group"
+  },
+  {
+   "fieldname": "notification_message",
+   "fieldtype": "Text Editor",
+   "label": "Notification Message"
+  },
+  {
+   "fieldname": "section_break_7",
+   "fieldtype": "Section Break"
   }
  ],
  "icon": "fa fa-calendar",
  "idx": 1,
- "modified": "2021-06-08 00:57:58.577161",
+ "modified": "2021-06-10 04:52:48.156005",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Holiday List",
