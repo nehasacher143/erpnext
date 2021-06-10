@@ -375,7 +375,6 @@ def get_package_tags(doctype, txt, searchfield, start, page_len, filters):
 
 	if filters.get('warehouse'):
 		args.update({'warehouse': filters.get("warehouse")})
-
 		return frappe.db.sql("""
 			select sle.package_tag, tag.package_tag, tag.item_code, tag.item_name, tag.item_group, round(sum(sle.actual_qty),2)
 			from `tabStock Ledger Entry` sle
@@ -386,11 +385,13 @@ def get_package_tags(doctype, txt, searchfield, start, page_len, filters):
 				and sle.warehouse = %(warehouse)s
 				and sle.package_tag like %(txt)s
 				{batch_no}
+				{company}
 				{match_conditions}
 			group by sle.package_tag having sum(sle.actual_qty) > 0
 			limit %(start)s, %(page_len)s""".format(
 				item_code="tag.item_code = %(item_code)s" if filters.get("item_code") else "tag.item_code is null",
 				batch_no="and sle.batch_no = {0}".format(frappe.db.escape(filters.get("batch_no"))) if filters.get("batch_no") else "",
+				company="and sle.company = {0}".format(frappe.db.escape(filters.get("company"))) if filters.get("company") else "",
 				match_conditions=get_match_cond(doctype)
 		), args, debug=1, explain=1)
 	else:
@@ -402,12 +403,14 @@ def get_package_tags(doctype, txt, searchfield, start, page_len, filters):
 			{item_code}
 			{is_used}
 			{batch_no}
+			{company}
 			{match_conditions}
 			order by package_tag.name desc
 			limit %(start)s, %(page_len)s""".format(
 				item_code="and package_tag.item_code = %(item_code)s" if filters.get("item_code") else "",
 				is_used="and package_tag.is_used = %(is_used)s" if "is_used" in filters else "",
 				batch_no="and package_tag.batch_no = {0}".format(frappe.db.escape(filters.get("batch_no"))) if filters.get("batch_no") else "",
+				company = "and package_tag.company = {0}".format(frappe.db.escape(filters.get("company"))) if filters.get("company") else "",
 				match_conditions=get_match_cond(doctype)
 		), args)
 
