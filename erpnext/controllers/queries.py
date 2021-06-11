@@ -533,7 +533,7 @@ def warehouse_query(doctype, txt, searchfield, start, page_len, filters):
 		CONCAT_WS(" : ", "Actual Qty", ifnull( ({sub_query}), 0) ) as actual_qty
 		from `tabWarehouse`
 		where
-		   `tabWarehouse`.`{key}` like {txt}
+			 `tabWarehouse`.`{key}` like {txt}
 			{fcond} {mcond}
 		order by
 			`tabWarehouse`.name desc
