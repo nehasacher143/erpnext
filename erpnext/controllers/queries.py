@@ -10,7 +10,7 @@ from collections import defaultdict
 from erpnext.stock.get_item_details import _get_item_tax_template
 from frappe.utils import unique
 
- # searches for active employees
+# searches for active employees
 def employee_query(doctype, txt, searchfield, start, page_len, filters):
 	conditions = []
 	fields = get_fields("Employee", ["name", "employee_name"])
@@ -68,7 +68,7 @@ def lead_query(doctype, txt, searchfield, start, page_len, filters):
 		})
 
 
- # searches for customer
+# searches for customer
 def customer_query(doctype, txt, searchfield, start, page_len, filters):
 	conditions = []
 	cust_master_name = frappe.defaults.get_user_default("cust_master_name")
