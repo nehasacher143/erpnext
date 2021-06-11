@@ -97,7 +97,7 @@ def is_holiday(holiday_list, date=today()):
 def send_holiday_notification():
 	# holidays is a list of holidays which fall in 7 days from today
 	today_date = today()
-	holiday_lists = frappe.get_all('Holiday List', filters={"from_date": ["<", today_date],"to_date": [">", today_date] }, fields = ["name", "send_reminders_to","notification_message"])
+	holiday_lists = frappe.get_all('Holiday List', filters={"from_date": ["<", today_date],"to_date": [">", today_date]}, fields = ["name", "send_reminders_to","notification_message"])
 	new_holidays = """"""
 
 	for holiday_list in holiday_lists:
