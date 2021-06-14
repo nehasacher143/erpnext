@@ -95,36 +95,43 @@ def is_holiday(holiday_list, date=today()):
 		return False
 
 def send_holiday_notification():
+	"""Sends an email for list of holidays falling in 7 days from today
+	"""
 	# holidays is a list of holidays which fall in 7 days from today
 	today_date = today()
-	holiday_lists = frappe.get_all('Holiday List', filters={"enabled" : 1 }, fields = ["name", "send_reminders_to","notification_message"])
-	new_holidays = """"""
+	holiday_lists = frappe.get_all('Holiday List', filters={"enabled" : 1}, fields=["name", "send_reminders_to", "notification_message"])
 
 	for holiday_list in holiday_lists:
 		end_date = get_date_str(add_days(today(), 7))
-		holidays = frappe.get_all('Holiday', filters={"parent" : holiday_list.name, "holiday_date": ["BETWEEN", [today_date, end_date]]}, fields=["holiday_date","description"])
+		holidays = frappe.get_all('Holiday', filters={"parent": holiday_list.name, "holiday_date": ["BETWEEN", [today_date, end_date]]}, fields=["holiday_date", "description"])
 
 		if holidays:
 			# Forming a new String to make a table with all the Holidays
-			new_holidays = new_holidays + """<table>
-				<thead>
-				<tr><th>Date</th><th>Day</th><th>Description</th></tr>
-				</thead>
-				<tbody>"""
-
+			_holiday = ""
 			for holiday in holidays:
-				new_holidays += """<tr>
-				<td>{0}</td>
-				<td>{1}</td>
-				<td>{2}</td>
-				</tr>""".format(formatdate(holiday.holiday_date),frappe.utils.get_weekday(holiday.holiday_date),holiday.description)
+				_holiday += """
+					<tr>
+						<td>{0}</td>
+						<td>{1}</td>
+						<td>{2}</td>
+					</tr>
+					""".format(formatdate(holiday.holiday_date), frappe.utils.get_weekday(holiday.holiday_date), holiday.description)
 
-			new_holidays += """</tbody></table>"""
+			holiday_table = """
+					<table>
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Day</th>
+								<th>Description</th>
+							</tr>
+						</thead>
+						<tbody>
+							{0}
+						</tbody>
+					</table>
+				""".format(_holiday)
 
 			recipients = [d.email for d in frappe.get_all("Email Group Member",filters={"email_group": holiday_list.send_reminders_to}, fields=["email"])]
-
-			message = holiday_list.notification_message +'<br>'+ new_holidays
-
+			message = holiday_list.notification_message + '<br>' + holiday_table
 			frappe.sendmail(recipients=recipients, subject="Holiday Notification", message=message)
-
-			new_holidays = """"""
