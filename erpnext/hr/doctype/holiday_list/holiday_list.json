@@ -10,6 +10,7 @@
   "holiday_list_name",
   "from_date",
   "to_date",
+  "enabled",
   "column_break_4",
   "total_holidays",
   "send_reminders_to",
@@ -124,11 +125,17 @@
   {
    "fieldname": "section_break_7",
    "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
   }
  ],
  "icon": "fa fa-calendar",
  "idx": 1,
- "modified": "2021-06-10 04:52:48.156005",
+ "modified": "2021-06-11 07:45:52.632662",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Holiday List",
